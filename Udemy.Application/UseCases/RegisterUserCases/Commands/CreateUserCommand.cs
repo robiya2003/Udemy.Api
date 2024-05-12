@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Udemy.Application.UseCases.RegisterUserCases.Commands
 {
-    public class CreateUserCommand:IRequest<ResponceModel>
+    public class CreateUserCommand:IRequest<ResponceModel> 
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

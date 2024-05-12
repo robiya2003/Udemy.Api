@@ -8,7 +8,7 @@ using Udemy.Domain.MODELS;
 
 namespace Udemy.Application.UseCases.RegisterUserCases.Queries
 {
-    public class GetByIdCommandQuery:IRequest<UserModel>
+    public class GetByIdUserCommandQuery:IRequest<UserModel>
     {
         public int Id { get; set; }
     }

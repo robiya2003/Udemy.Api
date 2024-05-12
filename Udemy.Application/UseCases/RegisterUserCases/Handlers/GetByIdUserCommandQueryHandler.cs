@@ -11,14 +11,14 @@ using Udemy.Domain.MODELS;
 
 namespace Udemy.Application.UseCases.RegisterUserCases.Handlers
 {
-    public class GetByIdCommandQueryHandler : IRequestHandler<GetByIdCommandQuery, UserModel>
+    public class GetByIdUserCommandQueryHandler : IRequestHandler<GetByIdUserCommandQuery, UserModel>
     {
         private readonly IAppDbContext _appDbContext;
-        public GetByIdCommandQueryHandler(IAppDbContext appDbContext)
+        public GetByIdUserCommandQueryHandler(IAppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
-        public async Task<UserModel> Handle(GetByIdCommandQuery request, CancellationToken cancellationToken)
+        public async Task<UserModel> Handle(GetByIdUserCommandQuery request, CancellationToken cancellationToken)
         {
             return  _appDbContext.users.FirstOrDefaultAsync(x=>x.Id == request.Id).Result;
         }

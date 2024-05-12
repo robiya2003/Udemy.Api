@@ -17,8 +17,8 @@ namespace AutoService.Infrastracture
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<IAppDbContext,AppDbContext>(options =>
-                options
-                    
+                options.UseLazyLoadingProxies()
+
                         .UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             return services;

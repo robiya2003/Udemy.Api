@@ -31,7 +31,7 @@ namespace Udemy.Api.Controllers
         [HttpGet]
         public async Task<UserModel> GetByid(int id)
         {
-            return await _mediator.Send(new GetByIdCommandQuery() { Id=id});
+            return await _mediator.Send(new GetByIdUserCommandQuery() { Id=id});
         }
         [HttpDelete]
         public async Task<ResponceModel> DeleteUser(int id)
