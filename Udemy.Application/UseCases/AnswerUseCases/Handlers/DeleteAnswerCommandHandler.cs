@@ -8,32 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Udemy.Application.UseCases.AnswerUseCases.Commands;
-using Udemy.Domain.MODELS;
 
 namespace Udemy.Application.UseCases.AnswerUseCases.Handlers
 {
-    public class CreateAnswerCommandHandler:IRequestHandler<CreateAnswerCommand,ResponceModel>
+    public class DeleteAnswerCommandHandler:IRequestHandler<DeleteAnswerCommand,ResponceModel>
     {
         private readonly IAppDbContext _appDbContext;
-        public CreateAnswerCommandHandler(IAppDbContext appDbContext)
+        public DeleteAnswerCommandHandler(IAppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public async Task<ResponceModel> Handle(CreateAnswerCommand request, CancellationToken cancellationToken)
+        public async Task<ResponceModel> Handle(DeleteAnswerCommand request, CancellationToken cancellationToken)
         {
-            var answer = new AnswerModel()
-            {
-                Title = request.Title,
-                Body = request.Body,
-                Course=_appDbContext.courses.FirstOrDefaultAsync(x=>x.id == request.CourseId).Result
-            };
-            _appDbContext.answers.Add(answer);
+           var answer=_appDbContext.answers.FirstOrDefaultAsync(x=>x.Id == request.Id).Result;
+            _appDbContext.answers.Remove(answer);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel()
             {
-                Message="Create answer"
+                Message="Answer delete"
             };
+
         }
     }
 }
