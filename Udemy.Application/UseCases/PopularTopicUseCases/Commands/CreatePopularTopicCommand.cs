@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoService.Domain.Entities.Models;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,10 @@ using System.Threading.Tasks;
 
 namespace Udemy.Application.UseCases.PopularTopicUseCases.Commands
 {
-    internal class CreatePopularTopicCommand
+    public class CreatePopularTopicCommand:IRequest<ResponceModel>
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int TopicId {  get; set; }
     }
 }

@@ -29,5 +29,15 @@ namespace Udemy.Api.Controllers
         {
             return await _mediator.Send(new GetAllTopicCommandQuery ());
         }
+        [HttpPut]
+        public async Task<ResponceModel> UpdateTopic(UpdateTopicCommand command)
+        {
+            return await _mediator.Send(command);
+        }
+        [HttpDelete]
+        public async Task<ResponceModel> DeleteTopic(DeleteTopicCommand command)
+        {
+            return await _mediator.Send(command);
+        }
     }
 }
