@@ -22,7 +22,8 @@ namespace Udemy.Application.UseCases.PopularTopicUseCases.Handlers
 
         public async Task<List<PopularTopicModel>> Handle(GetAllPopularTopicCommandQuery request, CancellationToken cancellationToken)
         {
-            return await _appDbContext.popularTopics.ToListAsync();
+            var tops= await _appDbContext.popularTopics.ToListAsync();
+            return tops;
         }
     }
 }

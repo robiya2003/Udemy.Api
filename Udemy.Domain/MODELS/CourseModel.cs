@@ -13,6 +13,7 @@ namespace Udemy.Domain.MODELS
         public string description { get; set; }
         public string PhotoPath { get; set; }
         public virtual AutherModel auther { get; set; }
+        public virtual PopularTopicModel popularTopic { get; set; }
         public virtual List<UserModel> users { get; set; }
         public virtual List<LessonModel> lessons { get; set; }
         public virtual List<AnswerModel> answers { get; set; }

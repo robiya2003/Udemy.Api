@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Udemy.Application.UseCases.AutherUseCases.Commands;
 using Udemy.Application.UseCases.CategoryUseCases.Commands;
 using Udemy.Application.UseCases.RegisterUserCases.Commands;
 using Udemy.Application.UseCases.TopicUseCases.Commands;
@@ -21,6 +22,7 @@ namespace Udemy.Application.Mappers
 
             CreateMap<CategoryModel,CreateCategoryCommand>().ReverseMap();
             CreateMap<TopicModel,CreateTopicCommand>().ReverseMap();
+            CreateMap<AutherModel,CreateAutherCommand>().ReverseMap();
         }
     }
 }
