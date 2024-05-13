@@ -13,9 +13,11 @@ namespace Udemy.Api.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public CategoriesController(IMediator mediator)
+   
+        public CategoriesController(IMediator mediator, ILogger<CategoriesController> logger)
         {
             _mediator = mediator;
+            
         }
         [HttpPost]
         public async Task<ResponceModel> CreateCategory(CreateCategoryCommand command)
@@ -25,6 +27,7 @@ namespace Udemy.Api.Controllers
         [HttpGet]
         public async Task<List<CategoryModel>> GetAllCategory()
         {
+            
             return await _mediator.Send(new GetAllCategoryCommandQuery ());
         }
         [HttpPut]

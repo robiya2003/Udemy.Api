@@ -1,4 +1,5 @@
 using AutoService.Infrastracture;
+using Serilog;
 using System.Text.Json.Serialization;
 using Udemy.Application;
 namespace Udemy.Api
@@ -13,6 +14,11 @@ namespace Udemy.Api
 
             builder.Services.AddApplications();
             builder.Services.AddInfrastructure(builder.Configuration);
+
+          
+
+
+
 
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
