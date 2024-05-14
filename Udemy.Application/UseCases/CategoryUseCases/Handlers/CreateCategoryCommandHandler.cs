@@ -26,7 +26,12 @@ namespace Udemy.Application.UseCases.CategoryUseCases.Handlers
 
         public async Task<ResponceModel> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var cate=_mapper.Map<CategoryModel>( request);
+            var cate=new CategoryModel
+            {
+                CategoryPhotoPath = request.CategoryPhotoPath,
+                Name = request.Name,
+                Description = request.Description,  
+            };
            await _appDbContext.categories.AddAsync(cate);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel()

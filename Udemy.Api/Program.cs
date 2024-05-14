@@ -37,7 +37,10 @@ namespace Udemy.Api
                 app.UseSwaggerUI();
             }
 
+            //app.UseRouting();
+
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
