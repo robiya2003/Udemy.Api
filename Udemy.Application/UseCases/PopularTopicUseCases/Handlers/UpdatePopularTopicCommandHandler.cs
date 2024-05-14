@@ -24,7 +24,7 @@ namespace Udemy.Application.UseCases.PopularTopicUseCases.Handlers
             poptop.Name= request.Name;
             poptop.Description= request.Description;
             poptop.Topic = _appDbContext.topic.FirstOrDefaultAsync(x => x.Id == request.TopicId).Result;
-
+            poptop.PopularTopicPhotoPath = request.PopularTopicPhotoPath;
             _appDbContext.popularTopics.Update(poptop);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel()

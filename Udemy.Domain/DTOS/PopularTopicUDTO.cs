@@ -1,19 +1,18 @@
-﻿using AutoService.Domain.Entities.Models;
-using MediatR;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Udemy.Application.UseCases.PopularTopicUseCases.Commands
+namespace Udemy.Domain.DTOS
 {
-    public class UpdatePopularTopicCommand:IRequest<ResponceModel>
+    public class PopularTopicUDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int TopicId { get; set; }
-        public string PopularTopicPhotoPath { get; set; }
+        public IFormFile imagefile { get; set; }
     }
 }

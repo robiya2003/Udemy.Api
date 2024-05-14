@@ -13,5 +13,6 @@ namespace Udemy.Application.UseCases.PopularTopicUseCases.Commands
         public string Name { get; set; }
         public string Description { get; set; }
         public int TopicId {  get; set; }
+        public string PopularTopicPhotoPath { get; set; }
     }
 }
