@@ -27,9 +27,12 @@ namespace Udemy.Application.UseCases.TopicUseCases.Handlers
         public async Task<ResponceModel> Handle(CreateTopicCommand request, CancellationToken cancellationToken)
         {
             var top = new TopicModel() { 
+
+                TopicPhotoPath = request.TopicPhotoPath,
             Name=request.Name,
             Description=request.Description,
             Category=await _appDbContext.categories.FirstOrDefaultAsync(x=>x.Id==request.CategoryId)};
+            
             _appDbContext.topic.Add(top);
             await _appDbContext.SaveChangesAsync(cancellationToken);
             return new ResponceModel()

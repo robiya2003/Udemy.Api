@@ -24,6 +24,7 @@ namespace Udemy.Application.UseCases.TopicUseCases.Handlers
             top.Name = request.Name;
             top.Description = request.Description;
             top.Category=_appDbContext.categories.FirstOrDefaultAsync(x=>x.Id == request.Id).Result;
+            top.TopicPhotoPath = request.TopicPhotoPath;
             _appDbContext.topic.Update(top);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel()

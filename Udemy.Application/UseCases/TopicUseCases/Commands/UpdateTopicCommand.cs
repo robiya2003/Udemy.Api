@@ -14,5 +14,6 @@ namespace Udemy.Application.UseCases.TopicUseCases.Commands
         public int CategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string TopicPhotoPath { get; set; }
     }
 }
