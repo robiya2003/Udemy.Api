@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Udemy.Infastucture.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class six : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,7 +57,8 @@ namespace Udemy.Infastucture.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false)
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    CategoryPhotoPath = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,16 +116,17 @@ namespace Udemy.Infastucture.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    TopicModelId = table.Column<int>(type: "integer", nullable: true)
+                    TopicId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_popularTopics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_popularTopics_topic_TopicModelId",
-                        column: x => x.TopicModelId,
+                        name: "FK_popularTopics_topic_TopicId",
+                        column: x => x.TopicId,
                         principalTable: "topic",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,7 +139,7 @@ namespace Udemy.Infastucture.Migrations
                     description = table.Column<string>(type: "text", nullable: false),
                     PhotoPath = table.Column<string>(type: "text", nullable: false),
                     autherid = table.Column<int>(type: "integer", nullable: false),
-                    PopularTopicModelId = table.Column<int>(type: "integer", nullable: true)
+                    popularTopicId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,10 +151,11 @@ namespace Udemy.Infastucture.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_courses_popularTopics_PopularTopicModelId",
-                        column: x => x.PopularTopicModelId,
+                        name: "FK_courses_popularTopics_popularTopicId",
+                        column: x => x.popularTopicId,
                         principalTable: "popularTopics",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,14 +258,14 @@ namespace Udemy.Infastucture.Migrations
                 column: "Courseid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_courses_PopularTopicModelId",
-                table: "courses",
-                column: "PopularTopicModelId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_courses_autherid",
                 table: "courses",
                 column: "autherid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_courses_popularTopicId",
+                table: "courses",
+                column: "popularTopicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_lessons_Coursesid",
@@ -275,9 +278,9 @@ namespace Udemy.Infastucture.Migrations
                 column: "popularTopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_popularTopics_TopicModelId",
+                name: "IX_popularTopics_TopicId",
                 table: "popularTopics",
-                column: "TopicModelId");
+                column: "TopicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_topic_CategoryId",

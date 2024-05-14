@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Udemy.Application.UseCases.CategoryUseCases.Commands;
 using Udemy.Application.UseCases.CategoryUseCases.Queries;
+using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
 
 namespace Udemy.Api.Controllers
@@ -20,8 +21,20 @@ namespace Udemy.Api.Controllers
             
         }
         [HttpPost]
-        public async Task<ResponceModel> CreateCategory(CreateCategoryCommand command)
+        public async Task<ResponceModel> CreateCategory(CategoryDTO categoryDTO)
         {
+            var fileName = Path.GetFileName(categoryDTO.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\categories", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await categoryDTO.imagefile.CopyToAsync(fileStream);
+            }
+            CreateCategoryCommand command = new CreateCategoryCommand()
+            {
+                Name = categoryDTO.Name,
+                Description = categoryDTO.Description,
+                CategoryPhotoPath=filePath
+            };
             return await _mediator.Send(command);
         }
         [HttpGet]
@@ -31,8 +44,21 @@ namespace Udemy.Api.Controllers
             return await _mediator.Send(new GetAllCategoryCommandQuery ());
         }
         [HttpPut]
-        public async Task<ResponceModel> UpdateCategory(UpdateCategoryCommand command)
+        public async Task<ResponceModel> UpdateCategory(CategoryUDTO category)
         {
+            var fileName = Path.GetFileName(category.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\categories", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await category.imagefile.CopyToAsync(fileStream);
+            }
+            UpdateCategoryCommand command = new UpdateCategoryCommand
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                CategoryPhotoPath=filePath
+            };
             return await _mediator.Send(command);
         }
         [HttpDelete]

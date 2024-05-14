@@ -27,6 +27,7 @@ namespace Udemy.Application.UseCases.CategoryUseCases.Handlers
             var category=_appDbContext.categories.FirstOrDefaultAsync(x=> x.Id == request.Id).Result;  
             category.Name = request.Name;
             category.Description = request.Description;
+            category.CategoryPhotoPath = request.CategoryPhotoPath;
             _appDbContext.categories.Update(category);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel() {

@@ -12,15 +12,15 @@ using Udemy.Infastucture.Persistants;
 namespace Udemy.Infastucture.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240512093414_fife")]
-    partial class fife
+    [Migration("20240514174008_six1")]
+    partial class six1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -139,6 +139,10 @@ namespace Udemy.Infastucture.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CategoryPhotoPath")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
                         .IsRequired()

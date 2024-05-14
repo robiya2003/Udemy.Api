@@ -12,15 +12,15 @@ using Udemy.Infastucture.Persistants;
 namespace Udemy.Infastucture.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240512033225_two")]
-    partial class two
+    [Migration("20240514173924_six")]
+    partial class six
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -140,6 +140,10 @@ namespace Udemy.Infastucture.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CategoryPhotoPath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -165,9 +169,6 @@ namespace Udemy.Infastucture.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("PopularTopicModelId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("autherid")
                         .HasColumnType("integer");
 
@@ -179,11 +180,14 @@ namespace Udemy.Infastucture.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("popularTopicId")
+                        .HasColumnType("integer");
+
                     b.HasKey("id");
 
-                    b.HasIndex("PopularTopicModelId");
-
                     b.HasIndex("autherid");
+
+                    b.HasIndex("popularTopicId");
 
                     b.ToTable("courses");
                 });
@@ -420,17 +424,21 @@ namespace Udemy.Infastucture.Migrations
 
             modelBuilder.Entity("Udemy.Domain.MODELS.CourseModel", b =>
                 {
-                    b.HasOne("Udemy.Domain.MODELS.PopularTopicModel", null)
-                        .WithMany("courses")
-                        .HasForeignKey("PopularTopicModelId");
-
                     b.HasOne("Udemy.Domain.MODELS.AutherModel", "auther")
                         .WithMany("Courses")
                         .HasForeignKey("autherid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Udemy.Domain.MODELS.PopularTopicModel", "popularTopic")
+                        .WithMany("courses")
+                        .HasForeignKey("popularTopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("auther");
+
+                    b.Navigation("popularTopic");
                 });
 
             modelBuilder.Entity("Udemy.Domain.MODELS.LessonModel", b =>

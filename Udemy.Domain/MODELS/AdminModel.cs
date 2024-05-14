@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Udemy.Domain.MODELS
 {
     public class AdminModel
@@ -19,5 +20,6 @@ namespace Udemy.Domain.MODELS
         public DateTimeOffset ModifiedDate { get; set; }
         public DateTimeOffset DeletedDate { get; set; }
         public bool IsDeleted { get; set; } = false;
+        
     }
 }

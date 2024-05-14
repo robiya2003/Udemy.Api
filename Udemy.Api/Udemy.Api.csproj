@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Udemy.Infastucture\Udemy.Infastucture.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\categories\" />
+  </ItemGroup>
+
 </Project>

@@ -13,6 +13,7 @@ namespace Udemy.Application.UseCases.CategoryUseCases.Queries
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CategoryPhotoPath { get; set; }
         public virtual List<TopicModel> Topics { get; set; }
     }
 }
