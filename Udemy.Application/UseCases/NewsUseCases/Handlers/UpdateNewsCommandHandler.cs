@@ -24,7 +24,7 @@ namespace Udemy.Application.UseCases.NewsUseCases.Handlers
             var newes=_appDbContext.news.FirstOrDefaultAsync(x=>x.Id == request.Id).Result;
             newes.Title = request.Title;
             newes.About = request.About;
-            newes.PhotoPath = request.PhotoPath;
+            newes.NewsPhotoPath = request.PhotoPath;
             newes.popularTopic = _appDbContext.popularTopics.FirstOrDefaultAsync(x => x.Id == request.PopularTopicId).Result;
             _appDbContext.news.Update(newes);
             _appDbContext.SaveChangesAsync();

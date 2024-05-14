@@ -27,7 +27,7 @@ namespace Udemy.Application.UseCases.CourseUseCases.Handlers
             {
                 name=request.name,
                 description=request.description,
-                PhotoPath=request.PhotoPath,
+                CoursePhotoPath=request.PhotoPath,
                 auther=_appDbContext.authers.FirstOrDefaultAsync(x=>x.id==request.AutherId).Result,
                 popularTopic=_appDbContext.popularTopics.FirstOrDefaultAsync(x=>x.Id==request.PopularTopicId).Result
                 

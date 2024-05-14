@@ -25,7 +25,7 @@ namespace Udemy.Application.UseCases.NewsUseCases.Handlers
             var newses = new NewsModel()
             {
                 Title = request.Title,
-                PhotoPath = request.PhotoPath,
+                NewsPhotoPath=request.PhotoPath,
                 About=request.About,
                 popularTopic=_appDbContext.popularTopics.FirstOrDefaultAsync(x=>x.Id == request.PopularTopicId).Result
             };

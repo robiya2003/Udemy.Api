@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Udemy.Application.UseCases.NewsUseCases.Commands;
 using Udemy.Application.UseCases.NewsUseCases.Queries;
+using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
 
 namespace Udemy.Api.Controllers
@@ -18,8 +19,21 @@ namespace Udemy.Api.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<ResponceModel> CreateNews(CreateNewsCommand command)
+        public async Task<ResponceModel> CreateNews(NewsDTO news)
         {
+            var fileName = Path.GetFileName(news.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\news", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await news.imagefile.CopyToAsync(fileStream);
+            }
+            CreateNewsCommand command = new CreateNewsCommand()
+            {
+                PhotoPath = filePath,
+                PopularTopicId=news.PopularTopicId,
+                Title=news.Title,
+                About=news.About,
+            };
             return  await _mediator.Send(command);
         }
         [HttpGet]
@@ -28,8 +42,23 @@ namespace Udemy.Api.Controllers
             return await _mediator.Send(new GetAllNewsCommandQuery());
         }
         [HttpPut]
-        public async Task<ResponceModel> UpdateNews(UpdateNewsCommand command)
+        public async Task<ResponceModel> UpdateNews(NewsUDTO news)
         {
+            var fileName = Path.GetFileName(news.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\news", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await news.imagefile.CopyToAsync(fileStream);
+            }
+            UpdateNewsCommand command = new UpdateNewsCommand()
+            {
+                Id = news.Id,
+                About = news.About,
+                Title = news.Title,
+                PopularTopicId = news.PopularTopicId,
+                PhotoPath = filePath,
+
+            };
             return await _mediator.Send(command);
         }
         [HttpDelete]

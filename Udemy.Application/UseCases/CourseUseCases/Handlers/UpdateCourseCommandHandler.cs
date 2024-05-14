@@ -23,7 +23,7 @@ namespace Udemy.Application.UseCases.CourseUseCases.Handlers
             var course = _appDbContext.courses.FirstOrDefaultAsync(x => x.id == request.Id).Result;
             course.name=request.name; 
             course.description=request.description;
-            course.PhotoPath=request.PhotoPath;
+            course.CoursePhotoPath = request.PhotoPath;
             course.auther = _appDbContext.authers.FirstOrDefaultAsync(x => x.id == request.Id).Result;
             course.popularTopic = _appDbContext.popularTopics.FirstOrDefaultAsync(x => x.Id == request.Id).Result;
             _appDbContext.courses.Update(course);

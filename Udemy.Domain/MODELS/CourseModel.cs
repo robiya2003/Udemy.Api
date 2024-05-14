@@ -11,7 +11,7 @@ namespace Udemy.Domain.MODELS
         public int id {  get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public string PhotoPath { get; set; }
+        public string CoursePhotoPath { get; set; }
         public virtual AutherModel auther { get; set; }
         public virtual PopularTopicModel popularTopic { get; set; }
 

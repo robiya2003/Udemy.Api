@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Udemy.Application.UseCases.AutherUseCases.Commands;
 using Udemy.Application.UseCases.AutherUseCases.Queries;
+using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
 
 namespace Udemy.Api.Controllers
@@ -18,8 +19,22 @@ namespace Udemy.Api.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<ResponceModel> CreateAuther(CreateAutherCommand command)
+        public async Task<ResponceModel> CreateAuther(AutherDTO auther)
         {
+            var fileName = Path.GetFileName(auther.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\authers", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await auther.imagefile.CopyToAsync(fileStream);
+            }
+            CreateAutherCommand command = new CreateAutherCommand()
+            {
+                FullName = auther.FullName,
+                Gmail = auther.Gmail,
+                About = auther.About,
+                Exprince = auther.Exprince,
+                AutherPhotoPath=filePath
+            };
             return await _mediator.Send(command);
         }
         [HttpGet]
@@ -28,8 +43,22 @@ namespace Udemy.Api.Controllers
             return await _mediator.Send(new GetAllAutherCommandQuery());
         }
         [HttpPut]
-        public async Task<ResponceModel> UpdateAuther(UpdateAutherCommand command)
+        public async Task<ResponceModel> UpdateAuther(AutherUDTO auther)
         {
+            var fileName = Path.GetFileName(auther.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\authers", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await auther.imagefile.CopyToAsync(fileStream);
+            }
+            UpdateAutherCommand command = new UpdateAutherCommand()
+            {
+                FullName = auther.FullName,
+                Exprince = auther.Exprince,
+                About = auther.About,
+                Gmail = auther.Gmail,
+                AutherPhotoPath = filePath
+            };
             return await _mediator.Send(command);
         }
         [HttpDelete]

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Udemy.Application.UseCases.CourseUseCases.Commands;
 using Udemy.Application.UseCases.CourseUseCases.Queries;
+using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
 
 namespace Udemy.Api.Controllers
@@ -20,8 +21,22 @@ namespace Udemy.Api.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<ResponceModel> CreateCourse(CreateCourseCommand command)
+        public async Task<ResponceModel> CreateCourse(CourseDTO model)
         {
+            var fileName = Path.GetFileName(model.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\courses", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.imagefile.CopyToAsync(fileStream);
+            }
+            CreateCourseCommand command= new CreateCourseCommand()
+            {
+                PopularTopicId=model.PopularTopicId,
+                name=model.name,
+                description=model.description,
+                AutherId=model.AutherId,
+                PhotoPath=filePath,
+            };
             return await _mediator.Send(command);
         }
         [HttpGet]
@@ -30,9 +45,24 @@ namespace Udemy.Api.Controllers
             return await _mediator.Send(new GetAllCourseCommandQuery()); 
         }
         [HttpPut]
-        public async Task<ResponceModel> UpdateCourse(UpdateCourseCommand command)
+        public async Task<ResponceModel> UpdateCourse(CourseUDTO model)
         {
-           return await _mediator.Send(command);
+            var fileName = Path.GetFileName(model.imagefile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\courses", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.imagefile.CopyToAsync(fileStream);
+            }
+            UpdateCourseCommand command = new UpdateCourseCommand()
+            {
+                Id=model.Id,
+                PopularTopicId = model.PopularTopicId,
+                name = model.name,
+                description = model.description,
+                AutherId = model.AutherId,
+                PhotoPath = filePath,
+            };
+            return await _mediator.Send(command);
         }
         [HttpDelete]
         public async Task<ResponceModel> DeleteCourse(DeleteCourseCommand command)

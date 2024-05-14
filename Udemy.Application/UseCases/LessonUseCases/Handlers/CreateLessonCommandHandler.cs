@@ -28,7 +28,7 @@ namespace Udemy.Application.UseCases.LessonUseCases.Handlers
                Courses=_appDbContext.courses.FirstOrDefaultAsync(x=>x.id == request.CourseId).Result,
                name=request.name,
                description=request.description,
-               PhotoPath=request.PhotoPath,
+               LessonPhotoPath=request.PhotoPath,
                VideoPath=request.VideoPath,
            };
             _appDbContext.lessons.Add(lessonModel);

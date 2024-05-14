@@ -13,6 +13,7 @@ namespace Udemy.Domain.MODELS
         public string Exprince {  get; set; }
         public string About { get; set; }
         public string Gmail { get; set; }
+        public string AutherPhotoPath { get; set; }
         public virtual List<CourseModel> Courses { get; set; }
     }
 }

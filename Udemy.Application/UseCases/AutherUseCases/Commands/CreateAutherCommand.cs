@@ -15,5 +15,6 @@ namespace Udemy.Application.UseCases.AutherUseCases.Commands
         public string Exprince { get; set; }
         public string About { get; set; }
         public string Gmail { get; set; }
+        public string AutherPhotoPath { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace Udemy.Application.UseCases.AutherUseCases.Handlers
                 Exprince = request.Exprince,
                 About = request.About,
                 Gmail = request.Gmail,
+                AutherPhotoPath = request.AutherPhotoPath,
             };
             _appDbContext.authers.Add(auther);
             _appDbContext.SaveChangesAsync();

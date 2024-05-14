@@ -26,6 +26,7 @@ namespace Udemy.Application.UseCases.AutherUseCases.Handlers
             auther.About=request.About;
             auther.FullName=request.FullName;
             auther.Gmail=request.Gmail;
+            auther.AutherPhotoPath=request.AutherPhotoPath;
             _appDbContext.authers.Update(auther);
             _appDbContext.SaveChangesAsync();
             return new ResponceModel()

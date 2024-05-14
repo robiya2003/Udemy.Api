@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Udemy.Domain.MODELS
+namespace Udemy.Domain.DTOS
 {
-    public class LessonModel
+    public class LessonUDTO
     {
         public int id { get; set; }
+        public int CourseId { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public string LessonPhotoPath { get; set; }
+    
         public string VideoPath { get; set; }
-        public virtual CourseModel Courses { get; set; }
+        public IFormFile imagefile { get; set; }
     }
 }
