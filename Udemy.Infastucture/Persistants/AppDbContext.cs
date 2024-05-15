@@ -17,7 +17,7 @@ namespace Udemy.Infastucture.Persistants
             
         }
         public DbSet<UserModel> users { get ; set ; }
-        public DbSet<AdminModel> admins { get ; set ; }
+        
         public DbSet<AnswerModel> answers { get ; set ; }
         public DbSet<AutherModel> authers { get ; set ; }
         public DbSet<CategoryModel> categories { get ; set ; }
@@ -25,7 +25,7 @@ namespace Udemy.Infastucture.Persistants
         public DbSet<LessonModel> lessons { get ; set ; }
         public DbSet<NewsModel> news { get ; set ; }
         public DbSet<PopularTopicModel> popularTopics { get ; set ; }
-        public DbSet<SuperAdmin> superAdmins { get ; set ; }
+        
         public DbSet<TopicModel> topic { get ; set ; }
 
 
