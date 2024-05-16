@@ -1,9 +1,10 @@
 ﻿using AutoService.Domain.Entities.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Udemy.Application.UseCases.RegisterUserCases.Commands;
-using Udemy.Application.UseCases.RegisterUserCases.Queries;
+using Microsoft.Win32;
+using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
 
 namespace Udemy.Api.Controllers
@@ -12,36 +13,36 @@ namespace Udemy.Api.Controllers
     [ApiController]
     public class RegistratsiyaController : ControllerBase
     {
-        private readonly IMediator _mediator;
-        public RegistratsiyaController(IMediator mediator)
+        private readonly UserManager<UserModel> _userManager;
+        public RegistratsiyaController(UserManager<UserModel> userManager)
         {
-            _mediator = mediator;
+            _userManager = userManager;
         }
-       
         [HttpPost]
-        public async Task<ResponceModel> Createuser(CreateUserCommand command)
+        public async Task<ResponceModel> CreateUser(UserDto userDto)
         {
-            return await _mediator.Send(command);
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+            var user=new UserModel()
+            {
+                UserName=userDto.Username, Email=userDto.Email,
+               FirstName=userDto.Firstname, LastName=userDto.Lastname,
+              Role="User"
+            };
+
+            var result = await _userManager.CreateAsync(user, userDto.Password);
+
+            if (!result.Succeeded)
+                throw new Exception();
+
+            await _userManager.AddToRoleAsync(user, "User");
+            return new ResponceModel()
+            {
+                Message="User Created"
+            };
         }
-        [HttpGet]
-        public async Task<List<UserModel>> GetUsers()
-        {
-            return await _mediator.Send(new GetUsersCommandQuery());
-        }
-        [HttpGet]
-        public async Task<UserModel> GetByid(int id)
-        {
-            return await _mediator.Send(new GetByIdUserCommandQuery() { Id=id});
-        }
-        [HttpDelete]
-        public async Task<ResponceModel> DeleteUser(int id)
-        {
-            return await _mediator.Send(new DeleteUserCommand() { Id=id});
-        }
-        [HttpPut]
-        public async Task<UserModel> UpdateUser(UpdateUserCommand command)
-        {
-            return await _mediator.Send(command);
-        }
+
     }
 }

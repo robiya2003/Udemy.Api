@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Udemy.Application.UseCases.AutherUseCases.Commands;
 using Udemy.Application.UseCases.CategoryUseCases.Commands;
-using Udemy.Application.UseCases.RegisterUserCases.Commands;
+
 using Udemy.Application.UseCases.TopicUseCases.Commands;
 using Udemy.Domain.DTOS;
 using Udemy.Domain.MODELS;
@@ -17,8 +17,7 @@ namespace Udemy.Application.Mappers
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserModel,CreateUserCommand>().ReverseMap();
-            CreateMap<UserModel,UpdateUserCommand>().ReverseMap();
+           
 
             CreateMap<CategoryModel,CreateCategoryCommand>().ReverseMap();
             CreateMap<TopicModel,CreateTopicCommand>().ReverseMap();

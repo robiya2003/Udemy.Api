@@ -1,7 +1,10 @@
 using AutoService.Infrastracture;
+using Microsoft.AspNetCore.Identity;
 using Serilog;
 using System.Text.Json.Serialization;
 using Udemy.Application;
+using Udemy.Domain.MODELS;
+using Udemy.Infastucture.Persistants;
 namespace Udemy.Api
 {
     public class Program
@@ -19,7 +22,9 @@ namespace Udemy.Api
 
 
 
-
+            builder.Services.AddIdentity<UserModel,IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -46,6 +51,21 @@ namespace Udemy.Api
 
 
             app.MapControllers();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roles = new[] { "Admin", "User"  };
+
+                foreach (var role in roles)
+                {
+                    if (!roleManager.RoleExistsAsync(role).Result)
+                    {
+                        roleManager.CreateAsync(new IdentityRole(role)).Wait();
+                    }
+                }
+            }
+
 
             app.Run();
         }

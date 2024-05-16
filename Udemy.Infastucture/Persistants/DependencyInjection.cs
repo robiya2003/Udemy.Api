@@ -21,6 +21,8 @@ namespace AutoService.Infrastracture
 
                         .UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
+
+            
             return services;
         }
     }

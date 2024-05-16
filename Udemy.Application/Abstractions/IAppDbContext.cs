@@ -10,7 +10,6 @@ namespace AutoService.Application.Abstractions
 {
     public interface IAppDbContext
     {
-        public DbSet<UserModel> users { get; set; }
         
         public DbSet<AnswerModel> answers { get; set; }
         public DbSet<AutherModel> authers { get; set; }
